@@ -63,6 +63,15 @@ CustomEase.create("elastic", "0.5, 1.5, 0.8, 1");
 // Custom Ease for premium feel
 const customEase = "smooth";
 
+// Mobile detection
+const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+// GSAP Config for performance
+ScrollTrigger.config({ limitCallbacks: true });
+if (isTouch) {
+    ScrollTrigger.normalizeScroll(true);
+}
+
 // ============================================
 // CUSTOM CURSOR
 // ============================================
@@ -187,6 +196,8 @@ function initLoader() {
 // MAGNETIC BUTTONS
 // ============================================
 function initMagneticButtons() {
+    if (isTouch) return; // Disable on mobile for performance and better UX
+    
     const buttons = document.querySelectorAll('.bg-accent, .bg-white, .filter-btn');
 
     buttons.forEach(btn => {
@@ -307,6 +318,8 @@ function initScrambleTextEffects() {
 // DRAGGABLE GALLERY CARDS
 // ============================================
 function initDraggableGallery() {
+    if (isTouch) return; // Disable draggable on mobile to avoid scroll conflict
+    
     const cards = document.querySelectorAll('.card-3d');
 
     cards.forEach(card => {
@@ -377,7 +390,7 @@ function initScrollSmoother() {
     smoother = ScrollSmoother.create({
         wrapper: '#smooth-wrapper',
         content: '#smooth-content',
-        smooth: 1.5,
+        smooth: isTouch ? 0.5 : 1.5, // Less smooth on mobile for better responsiveness
         effects: true,
         smoothTouch: 0.1
     });
@@ -659,35 +672,42 @@ function initHeroAnimations() {
     // Video Scroll Sequence
     if (video) {
         // We removed the video scrub to let it play smoothly as an autoplaying background
-        const tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: "#index",
-                start: "top top",
-                end: "+=3000", // Scroll distance
-                pin: true,
-                scrub: 1,
-                markers: false,
-            }
+        let mm = gsap.matchMedia();
+        
+        mm.add("(min-width: 769px)", () => {
+            // Desktop sequence
+            createHeroTimeline(3000);
+        });
+        
+        mm.add("(max-width: 768px)", () => {
+            // Mobile sequence (shorter scroll)
+            createHeroTimeline(1500);
         });
 
-        // 1. Fade out main text
-        tl.to(".hero-main-text", { opacity: 0, scale: 0.9, duration: 1 })
+        function createHeroTimeline(endValue) {
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: "#index",
+                    start: "top top",
+                    end: `+=${endValue}`,
+                    pin: true,
+                    scrub: 1,
+                    markers: false,
+                    invalidateOnRefresh: true
+                }
+            });
 
-            // 2. Story Part 1 enters
-            .to("#story-1", { opacity: 1, y: 0, duration: 2 }, ">-0.5")
+            // 1. Fade out main text
+            tl.to(".hero-main-text", { opacity: 0, scale: 0.9, duration: 1 })
+                .to("#story-1", { opacity: 1, y: 0, duration: 2 }, ">-0.5")
+                .to("#story-1", { opacity: 0, y: -50, duration: 1 })
+                .to("#story-2", { opacity: 1, y: 0, duration: 2 })
+                .to("#story-2", { opacity: 0, y: -50, duration: 1 })
+                .to("#story-3", { opacity: 1, y: 0, duration: 2 })
+                .to("#story-3", { opacity: 0, scale: 1.1, duration: 1 });
+        }
 
-            // 3. Story Part 1 exits, Part 2 enters
-            .to("#story-1", { opacity: 0, y: -50, duration: 1 })
-            .to("#story-2", { opacity: 1, y: 0, duration: 2 })
-
-            // 4. Story Part 2 exits, Part 3 enters
-            .to("#story-2", { opacity: 0, y: -50, duration: 1 })
-            .to("#story-3", { opacity: 1, y: 0, duration: 2 })
-
-            // 5. Final fade out before unpin
-            .to("#story-3", { opacity: 0, scale: 1.1, duration: 1 });
-
-        console.log("Video scroll timeline created (without video scrub for performance).");
+        console.log("Video scroll timeline created with matchMedia.");
     } else {
         console.error("Hero video element not found!");
     }
@@ -1050,17 +1070,19 @@ function initHorizontalScroll() {
         const scrollWidth = homeContainer.scrollWidth;
         const viewportWidth = window.innerWidth;
 
-        gsap.to(homeContainer, {
-            x: -(scrollWidth - viewportWidth + 100),
-            ease: "none",
-            scrollTrigger: {
-                trigger: ".horizontal-section",
-                start: "top 60%",
-                end: "bottom 40%",
-                scrub: 1.5,
-                invalidateOnRefresh: true
-            }
-        });
+        if (!isTouch && scrollWidth > viewportWidth) {
+            gsap.to(homeContainer, {
+                x: -(scrollWidth - viewportWidth + 100),
+                ease: "none",
+                scrollTrigger: {
+                    trigger: ".horizontal-section",
+                    start: "top 60%",
+                    end: "bottom 40%",
+                    scrub: 1.5,
+                    invalidateOnRefresh: true
+                }
+            });
+        }
     }
 
     // Add 3D tilt effect to all cards
@@ -1151,7 +1173,7 @@ function animateCategoryGalleries() {
         const scrollWidth = container.scrollWidth;
         const viewportWidth = window.innerWidth;
 
-        if (scrollWidth > viewportWidth) {
+        if (!isTouch && scrollWidth > viewportWidth) {
             gsap.to(container, {
                 x: -(scrollWidth - viewportWidth + 100),
                 ease: "none",
