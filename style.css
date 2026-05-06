@@ -1,0 +1,1047 @@
+body {
+    background-color: #050505;
+    color: #ffffff;
+    overflow-x: hidden;
+    cursor: none;
+}
+
+/* ============================================
+   CUSTOM CURSOR
+   ============================================ */
+.custom-cursor {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    background: #3b82f6;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 10000;
+    transform: translate(-50%, -50%);
+    transition: width 0.2s, height 0.2s, background 0.2s;
+    mix-blend-mode: difference;
+}
+
+.cursor-follower {
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    border: 2px solid rgba(59, 130, 246, 0.5);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s, height 0.3s, border-color 0.3s;
+}
+
+.custom-cursor.hover {
+    width: 15px;
+    height: 15px;
+    background: #fff;
+}
+
+.cursor-follower.hover {
+    width: 60px;
+    height: 60px;
+    border-color: rgba(255, 255, 255, 0.8);
+}
+
+.custom-cursor.click {
+    transform: translate(-50%, -50%) scale(0.8);
+}
+
+/* ============================================
+   PAGE LOADER
+   ============================================ */
+.loader-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #050505;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+}
+
+.loader-content {
+    text-align: center;
+}
+
+.loader-logo {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 3rem;
+    font-weight: 900;
+    font-style: italic;
+    letter-spacing: -0.05em;
+    margin-bottom: 2rem;
+}
+
+.loader-logo span {
+    color: #3b82f6;
+}
+
+.loader-bar {
+    width: 200px;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 0 auto 1rem;
+}
+
+.loader-progress {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #3b82f6, #60a5fa);
+    border-radius: 10px;
+}
+
+.loader-percent {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Hide cursor on mobile */
+@media (max-width: 768px) {
+
+    .custom-cursor,
+    .cursor-follower {
+        display: none;
+    }
+
+    body {
+        cursor: default;
+    }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #050505;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #3b82f6;
+    border-radius: 10px;
+}
+
+/* Smooth Transitions */
+.page-section {
+    display: none;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.page-section.active {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Micro-animations au scroll */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease-out;
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Featured Text Reveal Animation */
+.text-reveal {
+    background: linear-gradient(to right, #3b82f6 50%, #fff 50%);
+    background-size: 200% 100%;
+    background-position: 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: background-position 0.5s ease-out;
+}
+
+.text-reveal:hover {
+    background-position: 0%;
+}
+
+/* Text Outline Effect */
+.text-outline {
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.text-outline:hover {
+    -webkit-text-stroke: 1px #3b82f6;
+    color: rgba(59, 130, 246, 0.1);
+}
+
+/* Glow Effect on Hover with Magnetic Feel */
+.glow-card {
+    position: relative;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.glow-card:hover {
+    box-shadow: 0 10px 40px -10px rgba(59, 130, 246, 0.3);
+    border-color: rgba(59, 130, 246, 0.6);
+    transform: translateY(-8px) scale(1.02);
+}
+
+/* Button Pulse/Magnetic Effect */
+.btn-magnetic {
+    transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.btn-magnetic:hover {
+    transform: scale(1.05);
+}
+
+.btn-magnetic:active {
+    transform: scale(0.95);
+}
+
+/* Lightbox Blur */
+.lightbox {
+    display: none;
+    backdrop-filter: blur(15px);
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 2000;
+}
+
+/* Hero Background Animation Parallax */
+.hero-bg-anim {
+    animation: zoom-fade 20s infinite alternate;
+}
+
+@keyframes zoom-fade {
+    0% {
+        transform: scale(1);
+        opacity: 0.3;
+    }
+
+    100% {
+        transform: scale(1.15);
+        opacity: 0.5;
+    }
+}
+
+/* Staggered Load Animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 40px, 0);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+.stagger-load>* {
+    opacity: 0;
+    animation: fadeInUp 0.5s forwards;
+}
+
+.stagger-load>*:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.stagger-load>*:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.stagger-load>*:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.stagger-load>*:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+.stagger-load>*:nth-child(5) {
+    animation-delay: 0.5s;
+}
+
+/* ============================================
+   GSAP OPTIMIZATIONS
+   ============================================ */
+
+/* Ensure smooth animations */
+.page-section,
+.glow-card,
+#lightbox,
+#main-header {
+    will-change: transform, opacity;
+}
+
+/* Disable reveal class animations (GSAP handles it now) */
+.reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+}
+
+/* Lightbox GSAP transitions */
+#lightbox {
+    display: none;
+}
+
+#lightbox.flex {
+    display: flex;
+}
+
+/* Home gallery smooth animations */
+.home-gallery-item {
+    will-change: transform, opacity;
+}
+
+/* Button hover states for GSAP */
+.bg-accent,
+.bg-white {
+    cursor: pointer;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+}
+
+/* Mobile menu GSAP ready */
+#mobile-menu {
+    opacity: 0;
+}
+
+#mobile-menu:not(.hidden) {
+    opacity: 1;
+}
+
+/* Smooth header transitions */
+#main-header {
+    backface-visibility: hidden;
+}
+
+/* Gallery items for smooth stagger */
+#full-gallery .glow-card {
+    backface-visibility: hidden;
+}
+
+/* Text animation support */
+.split-text span {
+    display: inline-block;
+}
+
+/* Scroll indicator pulse */
+.scroll-pulse {
+    animation: none;
+}
+
+/* Premium shadow effects */
+.glow-card:hover {
+    box-shadow:
+        0 20px 60px -20px rgba(59, 130, 246, 0.4),
+        0 0 40px -10px rgba(59, 130, 246, 0.2);
+}
+
+/* Lightbox image 3D effect */
+#lightbox-img {
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+}
+
+/* Contact form inputs focus animation */
+#contact input:focus,
+#contact textarea:focus {
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+/* Nav link animations */
+.nav-link {
+    position: relative;
+    backface-visibility: hidden;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #3b82f6;
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+/* Filter button active state */
+.filter-btn.active {
+    box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.5);
+}
+
+/* Custom cursor area */
+.cursor-follow {
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #3b82f6;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.15s ease;
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* ============================================
+   GLITCH TEXT EFFECT
+   ============================================ */
+.glitch-text {
+    position: relative;
+    display: inline-block;
+}
+
+.glitch-text::before,
+.glitch-text::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.8;
+}
+
+.glitch-text::before {
+    color: #ff0000;
+    animation: glitch-1 2s infinite linear alternate-reverse;
+    clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+}
+
+.glitch-text::after {
+    color: #00ffff;
+    animation: glitch-2 3s infinite linear alternate-reverse;
+    clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+}
+
+@keyframes glitch-1 {
+    0% {
+        transform: translate(0);
+    }
+
+    20% {
+        transform: translate(-3px, 3px);
+    }
+
+    40% {
+        transform: translate(-3px, -3px);
+    }
+
+    60% {
+        transform: translate(3px, 3px);
+    }
+
+    80% {
+        transform: translate(3px, -3px);
+    }
+
+    100% {
+        transform: translate(0);
+    }
+}
+
+@keyframes glitch-2 {
+    0% {
+        transform: translate(0);
+    }
+
+    20% {
+        transform: translate(3px, -3px);
+    }
+
+    40% {
+        transform: translate(3px, 3px);
+    }
+
+    60% {
+        transform: translate(-3px, -3px);
+    }
+
+    80% {
+        transform: translate(-3px, 3px);
+    }
+
+    100% {
+        transform: translate(0);
+    }
+}
+
+.glitch-text:hover::before,
+.glitch-text:hover::after {
+    animation-duration: 0.2s;
+}
+
+/* ============================================
+   HORIZONTAL SCROLL SECTION
+   ============================================ */
+.horizontal-scroll-wrapper {
+    width: 100%;
+    overflow: hidden;
+    padding: 2rem 0;
+}
+
+.horizontal-scroll-container {
+    display: flex;
+    gap: 2rem;
+    padding: 0 5vw;
+    width: max-content;
+}
+
+/* ============================================
+   3D CARD EFFECT
+   ============================================ */
+.card-3d {
+    position: relative;
+    width: 300px;
+    height: 400px;
+    perspective: 1000px;
+    flex-shrink: 0;
+}
+
+.card-3d-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.card-3d:hover .card-3d-inner {
+    transform: rotateY(15deg) rotateX(5deg) scale(1.05);
+    box-shadow:
+        -20px 20px 50px rgba(0, 0, 0, 0.5),
+        0 0 50px rgba(59, 130, 246, 0.2);
+}
+
+.card-3d-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.card-3d:hover .card-3d-image {
+    transform: scale(1.1);
+}
+
+.card-3d-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.card-3d:hover .card-3d-overlay {
+    opacity: 1;
+}
+
+.card-3d-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1.5rem;
+    transform: translateY(20px);
+    opacity: 0;
+    transition: all 0.4s ease;
+}
+
+.card-3d:hover .card-3d-content {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.card-3d-shine {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, 0.1),
+            transparent);
+    transform: skewX(-25deg);
+    transition: left 0.6s ease;
+}
+
+.card-3d:hover .card-3d-shine {
+    left: 150%;
+}
+
+/* ============================================
+   PARALLAX SECTION
+   ============================================ */
+.parallax-section {
+    position: relative;
+}
+
+.parallax-image {
+    will-change: transform;
+    transform: translateY(0);
+}
+
+/* ============================================
+   IMAGE REVEAL MASK
+   ============================================ */
+.reveal-mask {
+    position: relative;
+    overflow: hidden;
+}
+
+.reveal-mask::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: #3b82f6;
+    transform-origin: left;
+    transform: scaleX(1);
+}
+
+.reveal-mask.revealed::after {
+    animation: revealMask 1s ease forwards;
+}
+
+@keyframes revealMask {
+    0% {
+        transform: scaleX(1);
+        transform-origin: left;
+    }
+
+    50% {
+        transform: scaleX(1);
+        transform-origin: right;
+    }
+
+    100% {
+        transform: scaleX(0);
+        transform-origin: right;
+    }
+}
+
+/* ============================================
+   TILT EFFECT ON CARDS
+   ============================================ */
+.tilt-card {
+    transform-style: preserve-3d;
+    will-change: transform;
+}
+
+.tilt-card-inner {
+    transform: translateZ(30px);
+}
+
+/* ============================================
+   FLOATING ANIMATION
+   ============================================ */
+.floating {
+    animation: floating 3s ease-in-out infinite;
+}
+
+@keyframes floating {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-15px);
+    }
+}
+
+/* ============================================
+   GRADIENT BORDER ANIMATION
+   ============================================ */
+.gradient-border {
+    position: relative;
+    background: #0f0f0f;
+    border-radius: 20px;
+}
+
+.gradient-border::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(45deg, #3b82f6, #8b5cf6, #ec4899, #3b82f6);
+    background-size: 300% 300%;
+    border-radius: 22px;
+    z-index: -1;
+    animation: gradientBorder 4s ease infinite;
+}
+
+@keyframes gradientBorder {
+
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+/* ============================================
+   RESPONSIVE 3D CARDS
+   ============================================ */
+@media (max-width: 768px) {
+    .card-3d {
+        width: 250px;
+        height: 350px;
+    }
+
+    .horizontal-scroll-container {
+        gap: 1rem;
+    }
+}
+
+/* ============================================
+   PREMIUM GSAP ANIMATIONS STYLES
+   ============================================ */
+
+/* SplitText character animation */
+.split-char {
+    display: inline-block;
+    transform-origin: center center;
+    will-change: transform, opacity;
+}
+
+/* ScrollSmoother wrapper */
+#smooth-wrapper {
+    overflow: hidden;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+#smooth-content {
+    overflow: visible;
+    width: 100%;
+}
+
+/* Floating football animation */
+#floating-football {
+    pointer-events: none;
+    filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.5));
+}
+
+#floating-football svg {
+    width: 40px;
+    height: 40px;
+}
+
+@keyframes footballPulse {
+
+    0%,
+    100% {
+        opacity: 0.3;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.5;
+        transform: scale(1.1);
+    }
+}
+
+#floating-football {
+    animation: footballPulse 2s ease-in-out infinite;
+}
+
+/* Draggable card effects */
+.card-3d.dragging {
+    z-index: 100;
+    cursor: grabbing !important;
+}
+
+.card-3d.dragging .card-3d-inner {
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5),
+        0 0 60px rgba(59, 130, 246, 0.3);
+}
+
+/* ScrambleText styling */
+.scramble-char {
+    display: inline-block;
+    color: #3b82f6;
+    text-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+}
+
+/* Observer scroll direction effects */
+.scroll-tilt-up .card-3d-inner {
+    transform: perspective(1000px) rotateX(-5deg);
+}
+
+.scroll-tilt-down .card-3d-inner {
+    transform: perspective(1000px) rotateX(5deg);
+}
+
+/* DrawSVG line animations */
+.svg-draw-path {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+}
+
+.svg-draw-path.revealed {
+    animation: drawLine 2s ease forwards;
+}
+
+@keyframes drawLine {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+/* MorphSVG shape transitions */
+.morph-shape {
+    transition: d 0.5s ease;
+}
+
+/* Flip animation container */
+.flip-container {
+    perspective: 1000px;
+}
+
+.flip-item {
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+}
+
+/* InertiaPlugin momentum effects */
+.inertia-element {
+    will-change: transform;
+}
+
+/* CustomEase smooth transitions */
+.smooth-ease {
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Premium text effects */
+.text-split-word {
+    display: inline-block;
+    overflow: hidden;
+}
+
+.text-split-word>span {
+    display: inline-block;
+    transform-origin: 0% 100%;
+}
+
+/* Shimmer loading effect */
+.shimmer {
+    background: linear-gradient(90deg,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255, 255, 255, 0.1) 50%,
+            rgba(255, 255, 255, 0) 100%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+/* Particle trail for cursor */
+.cursor-trail {
+    position: fixed;
+    width: 5px;
+    height: 5px;
+    background: #3b82f6;
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0.6;
+    z-index: 9998;
+}
+
+/* Magnetic button enhanced effects */
+.magnetic-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.magnetic-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.magnetic-btn:hover::before {
+    width: 300%;
+    height: 300%;
+}
+
+/* Wave effect on buttons */
+.wave-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.wave-btn::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(59, 130, 246, 0.3) 0%, transparent 50%);
+    transform: translateY(100%);
+    transition: transform 0.4s ease;
+}
+
+.wave-btn:hover::after {
+    transform: translateY(0);
+}
+
+/* Text reveal mask animation */
+.text-mask-reveal {
+    position: relative;
+    overflow: hidden;
+}
+
+.text-mask-reveal::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: #3b82f6;
+    transform: translateX(-100%);
+    animation: maskReveal 0.8s ease forwards;
+}
+
+@keyframes maskReveal {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    50% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+/* Stagger reveal grid */
+.stagger-grid>* {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+}
+
+.stagger-grid.revealed>* {
+    animation: staggerReveal 0.6s ease forwards;
+}
+
+.stagger-grid.revealed>*:nth-child(1) {
+    animation-delay: 0.05s;
+}
+
+.stagger-grid.revealed>*:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.stagger-grid.revealed>*:nth-child(3) {
+    animation-delay: 0.15s;
+}
+
+.stagger-grid.revealed>*:nth-child(4) {
+    animation-delay: 0.2s;
+}
+
+.stagger-grid.revealed>*:nth-child(5) {
+    animation-delay: 0.25s;
+}
+
+.stagger-grid.revealed>*:nth-child(6) {
+    animation-delay: 0.3s;
+}
+
+@keyframes staggerReveal {
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ============================================
+   PORTFOLIO VIDEO BACKGROUND
+   ============================================ */
+.portfolio-video-bg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    transform: translate(-50%, -50%);
+    filter: blur(2px) saturate(0.8);
+    will-change: transform;
+}
+
+/* Ensure all portfolio content is above video */
+#portfolio .category-section {
+    position: relative;
+    z-index: 10;
+}
+
+#portfolio .horizontal-scroll-wrapper {
+    position: relative;
+    z-index: 10;
+}
+
+/* Add subtle animation to video on scroll */
+#portfolio:hover .portfolio-video-bg {
+    filter: blur(1px) saturate(1);
+    opacity: 0.25;
+    transition: all 0.5s ease;
+}
+
+/* Parallax video divider in portfolio */
+#portfolio .parallax-section {
+    position: relative;
+    z-index: 5;
+}
